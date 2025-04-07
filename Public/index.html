@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kehidupan di Kampus</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <button id="Contact-button">Home</button>
+    <button id="Home-button">Contact Info</button>
+    
+    <div class="video-container">
+        <video autoplay muted loop id="background-video">
+            <source src="Video/videoUPH.mp4" type="video/mp4">
+            Your browser does not support the video tag.
+        </video>
+        <div class="overlay-content">
+            <!-- <button class="Contact Info">Explore More</button>
+            <button class="">Explore More</button> -->
+        </div>
+    </div>
+
+    <div class="container">
+        <!-- Sidebar -->
+        <aside class="sidebar">
+            <h2>Kehidupan di Kampus</h2>
+            <input type="text" id="searchInput" placeholder="Type to search...">
+            <button class="btn red" id="allActivitiesBtn">Semua Kegiatan Mahasiswa</button>
+
+            <h3>Organisasi</h3>
+            <button class="btn red" data-unit="ukm">UKM</button>
+            <button class="btn red" data-unit="ulm">ULM</button>
+            <button class="btn red" data-unit="ok">OK</button>
+
+            <h3>Forum Chat</h3>
+            <div class="forum-container">
+                <div id="forumMessages"></div> <!-- Message display area -->
+                <input type="text" id="forumInput" placeholder="Type a message..." />
+                <button id="sendMessage">Send</button>
+            </div>
+        </aside>
+
+        <!-- Main Content -->
+        <main class="content">
+            <!-- Daftar Organisasi -->
+            <div id="orgList">
+                <div class="grid" id="orgGrid"></div>
+            </div>
+
+            <!-- Detail Organisasi (Hidden by Default) -->
+            <div id="orgDetail" class="hidden">
+                <button class="back-btn" onclick="showOrgList()">← Kembali</button>
+                <div id="detailContent"></div>
+            </div>
+
+            <!-- Halaman Unit Kegiatan (Hidden by Default) -->
+            <div id="unitPage" class="hidden">
+                <button class="back-btn" onclick="showOrgList()">← Kembali</button>
+                <div id="unitContent"></div>
+            </div>
+        </main>
+    </div>
+    <script src="script.js"></script>
+</body>
+</html>
