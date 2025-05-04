@@ -1,0 +1,309 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Login - Kehidupan di Kampus</title>
+  <link rel="stylesheet" href="styles.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+  <style>
+    body {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      height: 100vh;
+      background: linear-gradient(to right, #081c30, #0e4d64);
+      color: white;
+      font-family: Arial, sans-serif;
+    }
+    .login-container {
+      background-color: #1e293b;
+      padding: 40px;
+      border-radius: 10px;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+      width: 100%;
+      max-width: 400px;
+    }
+    .login-container h2 {
+      text-align: center;
+      margin-bottom: 20px;
+    }
+    .login-container input {
+      width: 95%;
+      padding: 10px;
+      margin: 10px 0;
+      border: none;
+      border-radius: 5px;
+    }
+    .login-container button {
+      width: 100%;
+      padding: 10px;
+      margin-top: 10px;
+      color: white;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      font-size: 1rem;
+    }
+    .login-btn-email {
+      background-color: #3498db;
+    }
+    .login-btn-email:hover {
+      background-color: #2980b9;
+    }
+    .provider-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 10px;
+      margin-top: 20px;
+    }
+    .provider-btn {
+      aspect-ratio: 1 / 1;
+      border-radius: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      font-size: 1.4rem;
+      border: none;
+      color: white;
+    }
+    .login-btn-google {
+      background-color: #db4437;
+    }
+    .login-btn-facebook {
+      background-color: #4267B2;
+    }
+    .login-btn-apple {
+      background-color: #000000;
+    }
+    .login-btn-phone {
+      background-color: #27ae60;
+    }
+    .error-message {
+      color: #ff6b6b;
+      text-align: center;
+      margin-top: 15px;
+    }
+    .login-btn-blue {
+  background-color: #3498db;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  padding: 10px;
+  width: 100%;
+  margin-top: 10px;
+  cursor: pointer;
+  font-size: 1rem;
+}
+
+.login-btn-blue:hover {
+  background-color: #2980b9;
+}
+#password-hint {
+  min-height: 20px;
+}
+.login-container a {
+  color: #3498db;
+  text-decoration: none;
+  font-weight: bold;
+}
+
+.login-container a:hover {
+  color: #2980b9;
+  text-decoration: underline;
+}
+
+
+  </style>
+  <!-- Firebase SDK -->
+  <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-auth-compat.js"></script>
+  <script>
+    const firebaseConfig = {
+    apiKey: "AIzaSyAidBvV5RYwCK7Gho4EWXcv82XFE3Kydes",
+    authDomain: "website-student-activity.firebaseapp.com",
+    projectId: "website-student-activity",
+    storageBucket: "website-student-activity.firebasestorage.app",
+    messagingSenderId: "496395451220",
+    appId: "1:496395451220:web:700551aa1d8e9ede1726c1"
+    };
+    firebase.initializeApp(firebaseConfig);
+
+    firebase.auth().onAuthStateChanged((user) => {
+      if (user) {
+        window.location.href = "semua-kegiatan.html";
+      }
+    });
+  </script>
+</head>
+<body>
+  <!-- Tambahkan ke dalam <body> menggantikan isi lama .login-container -->
+<div class="login-container">
+  <!-- LOGIN FORM -->
+  <div id="login-form">
+    <h2>Login</h2>
+    <input type="email" id="email" placeholder="Email">
+    <input type="password" id="password" placeholder="Password">
+    <button class="login-btn-email" onclick="loginUser()">Login</button>
+
+    <div class="provider-grid">
+      <button class="provider-btn login-btn-google" onclick="loginWithGoogle()">
+        <i class="fab fa-google"></i>
+      </button>
+      <button class="provider-btn login-btn-facebook" onclick="loginWithFacebook()">
+        <i class="fab fa-facebook-f"></i>
+      </button>
+      <button class="provider-btn login-btn-apple" onclick="loginWithApple()">
+        <i class="fab fa-apple"></i>
+      </button>
+      <button class="provider-btn login-btn-phone" onclick="loginWithPhone()">
+        <i class="fas fa-phone-alt"></i>
+      </button>
+    </div>
+
+    <p style="text-align:center; margin-top:20px;">
+      Belum punya akun? <a href="#" onclick="showSignUpForm()">Daftar</a>
+    </p>
+  </div>
+
+  <!-- SIGN UP FORM -->
+  <div id="signup-form" style="display:none;">
+    <h2>Daftar Akun Baru</h2>
+    <input type="text" id="signup-name" placeholder="Nama Lengkap">
+  <input type="email" id="signup-email" placeholder="Email">
+  <input type="password" id="signup-password" placeholder="Password" oninput="validatePasswordLive()">
+
+  <div id="password-hint" style="color: #ff6b6b; font-size: 0.9rem; margin-top: 5px;"></div>
+  <button class="login-btn-blue" onclick="signUpUser()">Daftar</button>
+  <p style="text-align:center; margin-top:15px;">
+    Sudah punya akun? <a href="#" onclick="showLoginForm()">Kembali ke Login</a>
+  </p>
+  </div>
+
+  <div class="error-message" id="error"></div>
+</div>
+
+
+  <script>
+    function loginUser() {
+      const email = document.getElementById('email').value;
+      const password = document.getElementById('password').value;
+      const errorDiv = document.getElementById('error');
+
+      firebase.auth().signInWithEmailAndPassword(email, password)
+        .catch(error => errorDiv.textContent = error.message);
+    }
+
+    function loginWithGoogle() {
+      const provider = new firebase.auth.GoogleAuthProvider();
+      firebase.auth().signInWithPopup(provider)
+        .catch(error => document.getElementById('error').textContent = error.message);
+    }
+
+    function loginWithFacebook() {
+      const provider = new firebase.auth.FacebookAuthProvider();
+      firebase.auth().signInWithPopup(provider)
+        .catch(error => document.getElementById('error').textContent = error.message);
+    }
+
+    function loginWithApple() {
+      const provider = new firebase.auth.OAuthProvider('apple.com');
+      firebase.auth().signInWithPopup(provider)
+        .catch(error => document.getElementById('error').textContent = error.message);
+    }
+
+    function loginWithPhone() {
+      const phoneNumber = prompt("Masukkan nomor telepon kamu (dengan kode negara):");
+      if (!phoneNumber) return;
+
+      const appVerifier = new firebase.auth.RecaptchaVerifier('login-container', {
+        size: 'invisible'
+      });
+
+      firebase.auth().signInWithPhoneNumber(phoneNumber, appVerifier)
+        .then(confirmationResult => {
+          const code = prompt("Masukkan kode verifikasi:");
+          return confirmationResult.confirm(code);
+        })
+        .catch(error => document.getElementById('error').textContent = error.message);
+    }
+    function toggleForm() {
+  const signupForm = document.getElementById('signup-form');
+  const loginForm = document.querySelector('.login-container h2');
+  if (signupForm.style.display === 'none') {
+    signupForm.style.display = 'block';
+    loginForm.textContent = 'Login (atau Daftar di bawah)';
+  } else {
+    signupForm.style.display = 'none';
+    loginForm.textContent = 'Login';
+  }
+}
+
+function showSignUpForm() {
+  document.getElementById('login-form').style.display = 'none';
+  document.getElementById('signup-form').style.display = 'block';
+  document.getElementById('error').textContent = '';
+}
+
+function showLoginForm() {
+  document.getElementById('signup-form').style.display = 'none';
+  document.getElementById('login-form').style.display = 'block';
+  document.getElementById('error').textContent = '';
+}
+
+function signUpUser() {
+  const name = document.getElementById('signup-name').value.trim();
+  const email = document.getElementById('signup-email').value.trim();
+  const password = document.getElementById('signup-password').value;
+  const errorDiv = document.getElementById('error');
+
+  errorDiv.textContent = '';
+
+  if (!name || !email || !password) {
+    alert('Harap isi semua kolom.');
+    return;
+  }
+
+  const hasCapital = /[A-Z]/.test(password);
+  const hasSpecial = /[!@#$%^&*(),.?":{}|<>]/.test(password);
+  const isLongEnough = password.length >= 6;
+
+  let issues = [];
+  if (!isLongEnough) issues.push('minimal 6 karakter');
+  if (!hasCapital) issues.push('minimal 1 huruf kapital');
+  if (!hasSpecial) issues.push('minimal 1 karakter spesial');
+
+  if (issues.length > 0) {
+    alert('Password harus memiliki:\n- ' + issues.join('\n- '));
+    return;
+  }
+
+  firebase.auth().createUserWithEmailAndPassword(email, password)
+    .then((userCredential) => {
+      return userCredential.user.updateProfile({ displayName: name });
+    })
+    .then(() => {
+      alert('Akun berhasil dibuat! Silakan login.');
+      showLoginForm();
+    })
+    .catch(error => {
+      errorDiv.textContent = error.message;
+    });
+}
+
+function validatePasswordLive() {
+  const password = document.getElementById('signup-password').value;
+  const hint = document.getElementById('password-hint');
+
+  const errors = [];
+  if (password.length < 6) errors.push("Minimal 6 karakter");
+  if (!/[A-Z]/.test(password)) errors.push("Minimal 1 huruf kapital");
+  if (!/[!@#$%^&*(),.?\":{}|<>]/.test(password)) errors.push("Minimal 1 karakter spesial");
+
+  hint.textContent = errors.length > 0 ? "Password harus memiliki: " + errors.join(", ") : "";
+}
+
+  </script>
+</body>
+</html>

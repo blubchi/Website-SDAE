@@ -1,0 +1,265 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <title>Bantuan</title>
+    <link rel="stylesheet" href="styles.css">
+    <style>
+body {
+    background: linear-gradient(135deg, #081c30, #0e4d64);
+    background-repeat: no-repeat;
+    background-attachment: fixed; /* Tambahan penting agar tidak muncul garis bawah */
+    background-size: cover; /* Pastikan cover seluruh layar */
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 40px 20px;
+    min-height: 100vh;
+    margin: 0;
+    font-family: 'Poppins', Arial, sans-serif;
+    color: white;
+}
+
+
+        /* Font modern (Poppins) */
+        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@600;700&display=swap');
+
+        .help-title {
+            font-size: 48px;
+            font-weight: 700;
+            margin-top: 60px;
+            margin-bottom: 30px;
+            background: linear-gradient(90deg, #1abc9c, #3498db);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            text-align: center;
+            letter-spacing: 2px;
+        }
+
+        .search-container {
+            text-align: center;
+            width: 100%;
+            max-width: 600px;
+        }
+
+        .search-container input {
+            width: 100%;
+            padding: 15px;
+            font-size: 18px;
+            border: none;
+            border-bottom: 2px solid #3498db;
+            background: transparent;
+            color: white;
+            outline: none;
+            transition: border-color 0.3s;
+        }
+
+        .search-container input:focus {
+            border-bottom: 2px solid #1abc9c;
+        }
+
+        .faq-section {
+            margin-top: 60px;
+            width: 100%;
+            max-width: 700px;
+        }
+
+        .faq-item {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 8px;
+            margin-bottom: 15px;
+            padding: 20px;
+            transition: background 0.3s;
+        }
+
+        .faq-item:hover {
+            background: rgba(255, 255, 255, 0.1);
+        }
+
+        .faq-item h3 {
+            margin: 0 0 10px;
+            font-size: 20px;
+            color: #ffffff;
+        }
+
+        .faq-item p {
+            margin: 0;
+            color: #cbd5e1;
+            font-size: 16px;
+            line-height: 1.5;
+        }
+        .menu-container {
+    position: fixed;
+    top: 20px;
+    left: 20px;
+    z-index: 1000;
+}
+
+.hamburger {
+    width: 30px;
+    height: 30px;
+    background: linear-gradient(135deg, #0e4d64, #081c30);
+    border: 2px solid #0e4d64; /* kasih border warna toska */
+    border-radius: 12px; /* sudut membulat */
+    padding: 8px;
+    cursor: pointer;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center; /* tengahin garis-garisnya */
+}
+
+
+.hamburger span {
+    background: white;
+    height: 3px;
+    width: 100%;
+    border-radius: 5px;
+}
+
+.menu-dropdown {
+    margin-top: 10px;
+    background: rgba(12, 45, 62, 0.95);
+    border: 1px solid #1abc9c;
+    border-radius: 8px;
+    padding: 10px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.menu-dropdown button {
+    background: transparent;
+    color: white;
+    border: none;
+    text-align: left;
+    padding: 10px;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 16px;
+    transition: background 0.3s;
+}
+
+.menu-dropdown button:hover {
+    background: #1abc9c;
+    color: #081c30;
+}
+
+.hidden {
+    display: none;
+}
+
+    </style>
+</head>
+<body>
+    <div class="menu-container">
+        <div id="hamburgerMenu" class="hamburger">
+            <span></span>
+            <span></span>
+            <span></span>
+        </div>
+        <div id="menuDropdown" class="menu-dropdown hidden">
+            <button id="backButton">Kembali</button>
+            <button id="guidelinesButton">Guidelines</button>
+        </div>
+    </div>
+    
+    <div class="help-title">Help?</div>
+
+    <div class="search-container">
+        <input type="text" placeholder="Cari bantuan di sini..." id="faqSearch">
+    </div>
+
+    <div class="faq-section" id="faqSection">
+        <div class="faq-item">
+            <h3>Bagaimana cara reset password akun saya?</h3>
+            <p>Untuk reset password, klik pada tombol "Lupa Password" di halaman login dan ikuti instruksi yang dikirimkan ke email Anda.</p>
+        </div>
+        <div class="faq-item">
+            <h3>Bagaimana cara bergabung ke organisasi mahasiswa?</h3>
+            <p>Silakan kunjungi halaman "Semua Kegiatan Mahasiswa", pilih organisasi yang Anda minati, dan klik "Gabung".</p>
+        </div>
+        <div class="faq-item">
+            <h3>Siapa yang bisa saya hubungi untuk bantuan lebih lanjut?</h3>
+            <p>Anda dapat menghubungi admin di <strong>admin@kampus.com</strong>.</p>
+        </div>
+        <!-- Tambah FAQ lainnya di sini -->
+    </div>
+
+    <script>
+        const hamburgerMenu = document.getElementById('hamburgerMenu');
+        const menuDropdown = document.getElementById('menuDropdown');
+        const backButton = document.getElementById('backButton');
+        const guidelinesButton = document.getElementById('guidelinesButton');
+        const faqSearch = document.getElementById('faqSearch');
+        const faqSection = document.getElementById('faqSection');
+    
+        hamburgerMenu.addEventListener('click', function () {
+            menuDropdown.classList.toggle('hidden');
+        });
+    
+        backButton.addEventListener('click', function () {
+            window.location.href = 'semua-kegiatan.html';
+        });
+    
+        guidelinesButton.addEventListener('click', function () {
+            alert('Guidelines akan segera tersedia!');
+        });
+    
+        faqSearch.addEventListener('keydown', function(event) {
+            if (event.key === 'Enter') {
+                const keyword = faqSearch.value.trim().toLowerCase();
+                const faqItems = faqSection.querySelectorAll('.faq-item');
+                let found = false;
+    
+                if (keyword === '') {
+                    // Kalau kosong, tampilkan semua FAQ
+                    faqItems.forEach(item => {
+                        item.style.display = 'block';
+                    });
+                    // Hapus pesan "tidak ditemukan" kalau ada
+                    const notFoundMessage = document.getElementById('notFoundMessage');
+                    if (notFoundMessage) notFoundMessage.remove();
+                    return;
+                }
+    
+                // Sembunyikan semua FAQ dulu
+                faqItems.forEach(item => {
+                    const title = item.querySelector('h3').textContent.toLowerCase();
+                    const description = item.querySelector('p').textContent.toLowerCase();
+                    if (title.includes(keyword) || description.includes(keyword)) {
+                        item.style.display = 'block';
+                        found = true;
+                    } else {
+                        item.style.display = 'none';
+                    }
+                });
+    
+                // Hapus pesan lama kalau ada
+                const existingNotFoundMessage = document.getElementById('notFoundMessage');
+                if (existingNotFoundMessage) existingNotFoundMessage.remove();
+    
+                if (!found) {
+                    // Tampilkan pesan Tidak Ditemukan
+                    const message = document.createElement('div');
+                    message.id = 'notFoundMessage';
+                    message.style.marginTop = '30px';
+                    message.style.padding = '20px';
+                    message.style.background = 'rgba(255, 255, 255, 0.05)';
+                    message.style.borderRadius = '8px';
+                    message.style.color = '#cbd5e1';
+                    message.style.textAlign = 'center';
+                    message.style.fontSize = '18px';
+                    message.innerHTML = `
+                        <h3 style="color: white; font-size: 24px; margin-bottom: 15px;">Ups, Tidak Ditemukan!</h3>
+                        <p>Sepertinya kami belum pernah mendapatkan permasalahan ini. Kami akan segera memperbaikinya!<br>
+                        Silahkan hubungi kontak di bawah ini untuk penjelasan lebih lanjut. 😊</p>
+                        <p style="margin-top: 10px;"><strong>Email:</strong> admin@kampus.com</p>
+                    `;
+                    faqSection.appendChild(message);
+                }
+            }
+        });
+    </script>       
+</body>
+</html>

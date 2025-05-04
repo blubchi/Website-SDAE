@@ -1,0 +1,663 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <title>Semua Kegiatan Mahasiswa</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    <style>
+        /* Tambahan CSS untuk memperbaiki forum */
+        .forum-container {
+            background: #0c2d3e;
+            border: 1px solid #1e4559;
+            padding: 10px;
+            border-radius: 5px;
+            max-height: 300px;
+            display: flex;
+            flex-direction: column;
+            margin-top: 15px;
+        }
+
+        #forumMessages {
+            height: 180px;
+            overflow-y: auto;
+            background: #081c30;
+            padding: 10px;
+            border-radius: 5px;
+            border: 1px solid #1e4559;
+            margin-bottom: 10px;
+            color: #e0e0e0;
+        }
+
+        .message-item {
+            padding: 8px;
+            margin-bottom: 8px;
+            background-color: #0f3853;
+            border-radius: 4px;
+            word-break: break-word;
+            border-left: 3px solid #3498db;
+        }
+
+        .input-container {
+            display: flex;
+            margin-top: 5px;
+        }
+
+        #forumInput {
+            flex: 1;
+            padding: 8px;
+            border-radius: 4px;
+            border: 1px solid #1e4559;
+            background: #081c30;
+            color: white;
+        }
+
+        #sendMessage {
+            width: 60px;
+            padding: 8px;
+            background: #3498db;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            margin-left: 5px;
+        }
+
+        #forumStatus {
+            color: #f39c12;
+            font-size: 12px;
+            margin-top: 5px;
+            text-align: center;
+            font-style: italic;
+        }
+        .breadcrumb {
+    font-size: 14px;
+    margin-bottom: 10px;
+    color: #ccc;
+}
+
+.breadcrumb a {
+    color: #ccc;
+    text-decoration: none;
+}
+
+.breadcrumb a:hover {
+    text-decoration: underline;
+}
+.favorites-container {
+    background: #0c2d3e;
+    border: 1px solid #1e4559;
+    padding: 10px;
+    border-radius: 5px;
+    max-height: 300px;
+    overflow-y: auto;
+    display: flex;
+    flex-direction: column;
+    margin-top: 15px;
+}
+
+#favoritesList {
+    flex: 1;
+    overflow-y: auto;
+}
+
+.favorite-item {
+    padding: 8px;
+    margin-bottom: 8px;
+    background-color: #0f3853;
+    border-radius: 4px;
+    border-left: 3px solid #2ecc71;
+    color: #e0e0e0;
+    word-break: break-word;
+    cursor: pointer;
+}
+
+#favoritesStatus {
+    font-size: 12px;
+    color: #f39c12;
+    text-align: center;
+    margin-top: 5px;
+    font-style: italic;
+}
+.card-overlay {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: rgba(0,0,0,0.5);
+    padding: 8px;
+    border-radius: 0 0 5px 5px;
+}
+
+.favorite-btn {
+    position: absolute;
+    top: 8px;
+    right: 8px;
+    background: rgba(0,0,0,0.5);
+    border: none;
+    color: white;
+    font-size: 20px;
+    cursor: pointer;
+    padding: 5px;
+    border-radius: 50%;
+    z-index: 2;
+}
+
+.favorite-btn.favorited {
+    color: #f1c40f;
+}
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Sidebar -->
+        <aside class="sidebar">
+            <div class="sidebar-image-container">
+                <img id="sidebar-image" src="Image/logo sdae.png" alt="Logo SDAE">
+            </div>
+            <h2>Kehidupan di Kampus</h2>
+            <input type="text" id="searchInput" placeholder="Type to search...">
+            <button class="btn" id="allActivitiesBtn"><i class="fas fa-layer-group"></i> Semua Kegiatan Mahasiswa</button>
+
+            <h3>Favorit Saya</h3>
+            <div class="favorites-container">
+                <div id="favoritesList"></div>
+                <div id="favoritesStatus">Loading...</div>
+            </div>            
+
+            <h3>Organisasi</h3>
+            <button class="btn" data-unit="ukm"><i class="fas fa-users"></i> UKM</button>
+            <button class="btn" data-unit="ulm"><i class="fas fa-university"></i> ULM</button>
+            <button class="btn" data-unit="ok"><i class="fas fa-hands-helping"></i> OK</button>
+
+            <h3>Forum Chat</h3>
+            <div class="forum-container">
+                <div id="forumMessages"></div>
+                <div class="input-container">
+                    <input type="text" id="forumInput" placeholder="Type a message..." />
+                    <button id="sendMessage">Send</button>
+                </div>
+                <div id="forumStatus"></div>
+            </div>
+        </aside>
+
+        <!-- Main Content -->
+        <main class="content">
+            <nav id="breadcrumb" class="breadcrumb">
+                <a href="semua-kegiatan.html">Semua Kegiatan Mahasiswa</a> → Unit Kegiatan Mahasiswa (UKM)
+            </nav>
+            <h1>Unit Kegiatan Mahasiswa (UKM)</h1>
+            <p>Berikut adalah daftar lengkap semua organisasi dan kegiatan mahasiswa yang ada di Universitas Pelita Harapan:</p>
+            <div class="grid">
+                <div class="card" style="background-image: url('Image/ndc.jpg');">
+                    <button class="favorite-btn"><i class="fas fa-star"></i></button>
+                    <h4>Nusantara Dance Company</h4>
+                </div>
+                <div class="card" style="background-image: url('Image/artband.jpg');">
+                    <button class="favorite-btn"><i class="fas fa-star"></i></button>
+                    <h4>Artband</h4>
+                </div>
+                <div class="card" style="background-image: url('Image/lhs.jpg');">
+                    <button class="favorite-btn"><i class="fas fa-star"></i></button>
+                    <h4>Lighthouse Singers</h4>
+                </div>
+                <div class="card" style="background-image: url('Image/sdc.jpg');">
+                    <button class="favorite-btn"><i class="fas fa-star"></i></button>
+                    <h4>Spirit Dance Company</h4>
+                </div>
+                <div class="card" style="background-image: url('Image/manaproxia.jpg');">
+                    <button class="favorite-btn"><i class="fas fa-star"></i></button>
+                    <h4>Mana Proxia Theatre</h4>
+                </div>
+                <div class="card" style="background-image: url('Image/hanaunion.jpg');">
+                    <button class="favorite-btn"><i class="fas fa-star"></i></button>
+                    <h4>Hana Union</h4>
+                </div>
+                <div class="card" style="background-image: url('Image/meng.jpg');">
+                    <button class="favorite-btn"><i class="fas fa-star"></i></button>
+                    <h4>Meng Club</h4>
+                </div>
+                <div class="card" style="background-image: url('Image/billiard.jpg');">
+                    <button class="favorite-btn"><i class="fas fa-star"></i></button>
+                    <h4>Billiard</h4>
+                </div>
+                <div class="card" style="background-image: url('Image/esports.jpg');">
+                    <button class="favorite-btn"><i class="fas fa-star"></i></button>
+                    <h4>E-sports</h4>
+                </div>
+                <div class="card" style="background-image: url('Image/proops.jpg');">
+                    <button class="favorite-btn"><i class="fas fa-star"></i></button>
+                    <h4>Production Troops</h4>
+                </div>
+                <div class="card" style="background-image: url('Image/nihon.jpg');">
+                    <button class="favorite-btn"><i class="fas fa-star"></i></button>
+                    <h4>Nihon Utopia</h4>
+                </div>
+                <div class="card" style="background-image: url('Image/mentoring.jpg');">
+                    <button class="favorite-btn"><i class="fas fa-star"></i></button>
+                    <h4>Mentoring</h4>
+                </div>
+                <div class="card" style="background-image: url('Image/mpc.jpg');">
+                    <button class="favorite-btn"><i class="fas fa-star"></i></button>
+                    <h4>Movie Production Club</h4>
+                </div>
+                <div class="card" style="background-image: url('Image/pingpong.jpg');">
+                    <button class="favorite-btn"><i class="fas fa-star"></i></button>
+                    <h4>Ping pong</h4>
+                </div>
+            </div>
+        </main>
+        <div id="userProfile" class="user-profile">
+            <div class="profile-picture">
+                <img id="userPhoto" src="https://cdn-icons-png.flaticon.com/512/149/149071.png" alt="User Photo">
+            </div>
+            <div class="user-info-box">
+                <span id="userEmail">Loading...</span>
+            </div>
+        
+            <div id="profileDropdown" class="profile-dropdown hidden">
+                <button id="helpButton">Help / Bantuan</button>
+                <button id="logoutButton">Logout</button>
+            </div>
+        </div>                         
+    </div>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <p>&copy; 2025 Kehidupan di Kampus - Universitas Pelita Harapan. All rights reserved.</p>
+    </footer>
+
+    <!-- Firebase scripts -->
+    <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-firestore-compat.js"></script>
+    <script>
+        // Konfigurasi Firebase - ganti dengan konfigurasi project Anda
+        const firebaseConfig = {
+            apiKey: "AIzaSyAidBvV5RYwCK7Gho4EWXcv82XFE3Kydes",
+            authDomain: "website-student-activity.firebaseapp.com",
+            projectId: "website-student-activity",
+            storageBucket: "website-student-activity.firebasestorage.app",
+            messagingSenderId: "496395451220",
+            appId: "1:496395451220:web:700551aa1d8e9ede1726c1"
+        };
+
+        // Status element
+        const updateStatus = (message, isError = false) => {
+            const statusEl = document.getElementById('forumStatus');
+            if (statusEl) {
+                statusEl.textContent = message;
+                statusEl.style.color = isError ? '#e74c3c' : '#f39c12';
+                
+                // Clear status after 3 seconds if not an error
+                if (!isError) {
+                    setTimeout(() => {
+                        statusEl.textContent = '';
+                    }, 3000);
+                }
+            }
+        };
+
+        // Inisialisasi Firebase dengan penanganan error
+        try {
+            if (!firebase.apps || !firebase.apps.length) {
+                firebase.initializeApp(firebaseConfig);
+                console.log("Firebase initialized successfully");
+                updateStatus("Firebase connected");
+            }
+            
+            // Inisialisasi Firestore
+            const db = firebase.firestore();
+            const forumCollection = db.collection("forumMessages");
+            
+            document.addEventListener("DOMContentLoaded", function () {
+                console.log("DOM fully loaded");
+                const forumInput = document.getElementById("forumInput");
+                const sendMessageBtn = document.getElementById("sendMessage");
+                const forumMessages = document.getElementById("forumMessages");
+                
+                console.log("Forum elements:", { forumInput, sendMessageBtn, forumMessages });
+
+                if (!forumInput || !sendMessageBtn || !forumMessages) {
+                    console.error("Some forum elements are missing!");
+                    updateStatus("Forum elements missing", true);
+                    return;
+                }
+
+                // Tambahkan pesan testing untuk melihat apakah DOM berfungsi
+                forumMessages.innerHTML = '<div class="message-item">Menghubungkan ke forum chat...</div>';
+
+                // Kirim pesan dengan enter key juga
+                forumInput.addEventListener("keypress", function(event) {
+                    if (event.key === "Enter") {
+                        sendMessage();
+                    }
+                });
+
+                // Kirim pesan
+                sendMessageBtn.addEventListener("click", sendMessage);
+
+                function sendMessage() {
+                    const message = forumInput.value.trim();
+                    if (message !== "") {
+                        console.log("Sending message:", message);
+                        updateStatus("Mengirim pesan...");
+                        
+                        // Tambahkan pesan sementara dengan indikator "sending..."
+                        const tempId = 'temp-' + Date.now();
+                        const tempElement = document.createElement("div");
+                        tempElement.textContent = message + " (sending...)";
+                        tempElement.classList.add("message-item");
+                        tempElement.id = tempId;
+                        forumMessages.appendChild(tempElement);
+                        forumMessages.scrollTop = forumMessages.scrollHeight;
+                        
+                        forumCollection.add({
+                            text: message,
+                            timestamp: firebase.firestore.FieldValue.serverTimestamp(),
+                            created: new Date().getTime() // Fallback timestamp
+                        })
+                        .then(docRef => {
+                            console.log("Message sent successfully with ID:", docRef.id);
+                            forumInput.value = "";
+                            updateStatus("Pesan terkirim!");
+                            
+                            // Hapus pesan sementara (akan diganti oleh listener)
+                            const tempMsg = document.getElementById(tempId);
+                            if (tempMsg) tempMsg.remove();
+                        })
+                        .catch(error => {
+                            console.error("Error sending message:", error);
+                            updateStatus("Error: " + error.message, true);
+                            
+                            // Ubah tampilan pesan sementara menjadi error
+                            const tempMsg = document.getElementById(tempId);
+                            if (tempMsg) {
+                                tempMsg.textContent = message + " (gagal terkirim)";
+                                tempMsg.style.borderLeft = "3px solid #e74c3c";
+                            }
+                        });
+                    }
+                }
+
+                // Fungsi untuk render ulang semua pesan
+                function renderMessages(messages) {
+                    forumMessages.innerHTML = "";
+                    
+                    if (messages.length === 0) {
+                        const emptyElement = document.createElement("div");
+                        emptyElement.textContent = "Belum ada pesan. Jadilah yang pertama mengirim!";
+                        emptyElement.classList.add("message-item");
+                        emptyElement.style.fontStyle = "italic";
+                        forumMessages.appendChild(emptyElement);
+                        return;
+                    }
+                    
+                    messages.forEach(msg => {
+                        const messageElement = document.createElement("div");
+                        messageElement.textContent = msg.text || "[Pesan kosong]";
+                        messageElement.classList.add("message-item");
+                        forumMessages.appendChild(messageElement);
+                    });
+                    
+                    // Scroll to bottom
+                    forumMessages.scrollTop = forumMessages.scrollHeight;
+                }
+
+                // Listen pesan secara real-time dengan penanganan error
+                try {
+                    console.log("Setting up Firestore listener...");
+                    updateStatus("Memuat pesan...");
+                    
+                    // Pertama, ambil semua pesan yang ada
+                    forumCollection.orderBy("timestamp", "asc").get()
+                        .then(snapshot => {
+                            const messages = [];
+                            snapshot.forEach(doc => {
+                                const data = doc.data();
+                                messages.push({
+                                    id: doc.id,
+                                    text: data.text,
+                                    timestamp: data.timestamp
+                                });
+                            });
+                            
+                            console.log(`Loaded ${messages.length} messages from Firestore`);
+                            renderMessages(messages);
+                            updateStatus(messages.length > 0 ? 
+                                `Memuat ${messages.length} pesan` : "Tidak ada pesan");
+                            
+                            // Setelah memuat pesan awal, pasang listener untuk perubahan
+                            setupRealtimeListener();
+                        })
+                        .catch(error => {
+                            console.error("Error loading messages:", error);
+                            updateStatus("Error: " + error.message, true);
+                            
+                            // Coba tetap setup listener meskipun load awal gagal
+                            setupRealtimeListener();
+                        });
+                    
+                    function setupRealtimeListener() {
+                        const unsubscribe = forumCollection
+                            .orderBy("timestamp", "asc")
+                            .onSnapshot(
+                                snapshot => {
+                                    const changes = snapshot.docChanges();
+                                    console.log("Got snapshot with changes:", changes.length);
+                                    
+                                    if (changes.length > 0) {
+                                        // Kumpulkan semua pesan baru
+                                        const messages = [];
+                                        snapshot.forEach(doc => {
+                                            const data = doc.data();
+                                            messages.push({
+                                                id: doc.id,
+                                                text: data.text,
+                                                timestamp: data.timestamp
+                                            });
+                                        });
+                                        
+                                        // Render ulang semua pesan
+                                        renderMessages(messages);
+                                    }
+                                },
+                                error => {
+                                    console.error("Firestore listening error:", error);
+                                    updateStatus("Error: " + error.message, true);
+                                }
+                            );
+                        
+                        // Cleanup listener on page unload
+                        window.addEventListener("beforeunload", () => unsubscribe());
+                    }
+                    
+                } catch (error) {
+                    console.error("Error setting up Firestore listener:", error);
+                    updateStatus("Error: " + error.message, true);
+                }
+            });
+            
+        } catch (error) {
+            console.error("Firebase initialization error:", error);
+            updateStatus("Firebase error: " + error.message, true);
+        }
+    </script>
+
+    <!-- Main script untuk fitur lainnya -->
+    <script src="script.js"></script>
+    
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            const searchInput = document.getElementById("searchInput");
+            const grid = document.querySelector(".grid");
+        
+            // Search function
+            searchInput?.addEventListener("keydown", function (event) {
+                if (event.key === "Enter") {
+                    const keyword = this.value.toLowerCase();
+                    const cards = document.querySelectorAll(".card");
+                    cards.forEach(card => {
+                        const title = card.textContent.toLowerCase();
+                        card.style.display = title.includes(keyword) ? "block" : "none";
+                    });
+                }
+            });
+        
+            // Delegasi event: klik card di dalam grid
+            grid.addEventListener("click", function (event) {
+                const card = event.target.closest(".card");
+                if (card) {
+                    const orgName = card.textContent.trim();
+                    const orgUrlName = orgName.toLowerCase().replace(/\s+/g, "-");
+                    window.location.href = `${orgUrlName}.html`;
+                }
+            });
+        });
+        </script>
+        <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-auth-compat.js"></script>
+        <script>
+            document.addEventListener("DOMContentLoaded", function () {
+                firebase.auth().onAuthStateChanged(function(user) {
+                    const userPhoto = document.getElementById("userPhoto");
+                    const userEmail = document.getElementById("userEmail");
+        
+                    if (user) {
+                        userPhoto.src = user.photoURL || "default-profile.png"; // fallback ke default
+                        userEmail.textContent = user.email;
+                    } else {
+                        userProfile.style.display = "none"; // kalau belum login, sembunyikan
+                    }
+                });
+            });
+        </script>
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        const userProfile = document.getElementById("userProfile");
+        const profileDropdown = document.getElementById("profileDropdown");
+        const logoutButton = document.getElementById("logoutButton");
+        const helpButton = document.getElementById("helpButton");
+    
+        userProfile.addEventListener("click", function (e) {
+            e.stopPropagation();
+            profileDropdown.classList.toggle("hidden");
+        });
+    
+        document.addEventListener("click", function () {
+            profileDropdown.classList.add("hidden");
+        });
+    
+        helpButton.addEventListener("click", function () {
+            window.location.href = "help.html";
+        });
+    
+        logoutButton.addEventListener("click", function () {
+            firebase.auth().signOut().then(() => {
+                alert("Logout berhasil.");
+                window.location.href = "login.html"; 
+            }).catch((error) => {
+                console.error("Logout error:", error);
+                alert("Gagal logout. Coba lagi.");
+            });
+        });
+    });
+    </script>
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            const favoritesList = document.getElementById("favoritesList");
+            const favoritesStatus = document.getElementById("favoritesStatus");
+        
+            firebase.auth().onAuthStateChanged(function(user) {
+                if (user) {
+                    const userId = user.uid;
+                    const favoritesRef = firebase.firestore().collection("userFavorites").doc(userId);
+        
+                    function loadFavorites() {
+                        favoritesRef.get().then(doc => {
+                            if (doc.exists) {
+                                const data = doc.data();
+                                const favorites = data.favorites || [];
+        
+                                updateFavoriteIcons(favorites);
+                                updateFavoritesSidebar(favorites);
+                            } else {
+                                updateFavoriteIcons([]);
+                                updateFavoritesSidebar([]);
+                            }
+                            favoritesStatus.textContent = "";
+                        }).catch(error => {
+                            console.error("Error loading favorites:", error);
+                            favoritesStatus.textContent = "Gagal memuat favorit.";
+                        });
+                    }
+        
+                    function updateFavoriteIcons(favorites) {
+                        document.querySelectorAll(".card").forEach(card => {
+                            const orgName = card.querySelector("h4").innerText.trim();
+                            const favBtn = card.querySelector(".favorite-btn");
+        
+                            if (favorites.includes(orgName)) {
+                                favBtn.classList.add("favorited");
+                            } else {
+                                favBtn.classList.remove("favorited");
+                            }
+                        });
+                    }
+        
+                    function updateFavoritesSidebar(favorites) {
+                        favoritesList.innerHTML = "";
+        
+                        if (favorites.length === 0) {
+                            favoritesList.innerHTML = "<div class='favorite-item' style='font-style: italic;'>Belum ada favorit.</div>";
+                            return;
+                        }
+        
+                        favorites.forEach(item => {
+                            const favElement = document.createElement("div");
+                            favElement.className = "favorite-item";
+                            favElement.textContent = item;
+                            favElement.addEventListener("click", function() {
+                                const orgUrlName = item.toLowerCase().replace(/\s+/g, "-");
+                                window.location.href = `${orgUrlName}.html`;
+                            });
+                            favoritesList.appendChild(favElement);
+                        });
+                    }
+        
+                    function toggleFavorite(orgName) {
+                        favoritesRef.get().then(doc => {
+                            let favorites = [];
+                            if (doc.exists) {
+                                favorites = doc.data().favorites || [];
+                            }
+        
+                            if (favorites.includes(orgName)) {
+                                favorites = favorites.filter(fav => fav !== orgName);
+                            } else {
+                                favorites.push(orgName);
+                            }
+        
+                            favoritesRef.set({ favorites: favorites }).then(() => {
+                                loadFavorites();
+                            });
+                        }).catch(error => {
+                            console.error("Error toggling favorite:", error);
+                        });
+                    }
+        
+                    document.querySelectorAll(".favorite-btn").forEach(button => {
+    button.addEventListener("click", function (e) {
+        e.stopPropagation(); // Ini PENTING: Biar klik bintang tidak ikut klik card
+        const card = this.closest(".card");
+        const orgName = card.querySelector("h4").innerText.trim();
+        toggleFavorite(orgName);
+    });
+});
+        
+                    loadFavorites();
+                } else {
+                    favoritesStatus.textContent = "Silakan login untuk melihat favorit.";
+                }
+            });
+        });
+        </script> 
+</body>
+</html>

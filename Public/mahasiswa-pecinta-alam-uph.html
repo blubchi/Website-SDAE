@@ -1,0 +1,963 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <title>mapala - Badan Eksekutif Mahasiswa</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    <style>
+        /* Tambahan CSS untuk forum */
+        .forum-container {
+            background: #0c2d3e;
+            border: 1px solid #1e4559;
+            padding: 10px;
+            border-radius: 5px;
+            max-height: 300px;
+            display: flex;
+            flex-direction: column;
+            margin-top: 15px;
+        }
+
+        #forumMessages {
+            height: 180px;
+            overflow-y: auto;
+            background: #081c30;
+            padding: 10px;
+            border-radius: 5px;
+            border: 1px solid #1e4559;
+            margin-bottom: 10px;
+            color: #e0e0e0;
+        }
+
+        .message-item {
+            padding: 8px;
+            margin-bottom: 8px;
+            background-color: #0f3853;
+            border-radius: 4px;
+            word-break: break-word;
+            border-left: 3px solid #3498db;
+        }
+
+        .input-container {
+            display: flex;
+            margin-top: 5px;
+        }
+
+        #forumInput {
+            flex: 1;
+            padding: 8px;
+            border-radius: 4px;
+            border: 1px solid #1e4559;
+            background: #081c30;
+            color: white;
+        }
+
+        #sendMessage {
+            width: 60px;
+            padding: 8px;
+            background: #3498db;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            margin-left: 5px;
+        }
+
+        #forumStatus {
+            color: #f39c12;
+            font-size: 12px;
+            margin-top: 5px;
+            text-align: center;
+            font-style: italic;
+        }
+        .breadcrumb {
+    font-size: 14px;
+    margin-bottom: 10px;
+    color: #ccc;
+}
+
+.breadcrumb a {
+    color: #ccc;
+    text-decoration: none;
+}
+
+.breadcrumb a:hover {
+    text-decoration: underline;
+}
+.calendar-section {
+    margin-top: 30px;
+    background: #0c2d3e;
+    padding: 20px;
+    border-radius: 10px;
+    color: white;
+}
+
+#calendar {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    gap: 5px;
+    margin-top: 15px;
+}
+
+.calendar-day {
+    background: #081c30;
+    padding: 15px 5px;
+    border-radius: 8px;
+    text-align: center;
+    position: relative;
+    font-size: 14px;
+}
+
+.calendar-day.event {
+    background: #3498db;
+    color: white;
+}
+
+.event-label {
+    position: absolute;
+    bottom: 5px;
+    left: 50%;
+    transform: translateX(-50%);
+    background: rgba(0,0,0,0.5);
+    padding: 2px 5px;
+    border-radius: 4px;
+    font-size: 10px;
+}
+.calendar-section {
+    margin-top: 30px;
+    background: #0c2d3e;
+    padding: 20px;
+    border-radius: 10px;
+    color: white;
+}
+
+#calendar {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    gap: 8px;
+    margin-top: 20px;
+}
+
+.calendar-day {
+    background: #081c30;
+    padding: 15px;
+    border-radius: 8px;
+    text-align: center;
+    font-size: 14px;
+    position: relative;
+    cursor: pointer;
+    transition: background 0.3s;
+}
+
+.calendar-day.event {
+    background: #3498db;
+    color: #fff;
+}
+
+.event-tooltip {
+    display: none;
+    position: absolute;
+    top: 100%;
+    left: 50%;
+    transform: translateX(-50%);
+    background: #1e4559;
+    color: white;
+    padding: 8px 10px;
+    border-radius: 5px;
+    margin-top: 5px;
+    white-space: nowrap;
+    font-size: 12px;
+    z-index: 5;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.4);
+}
+
+.calendar-day.event:hover .event-tooltip {
+    display: block;
+}
+.calendar-section {
+    margin-top: 30px;
+    background: #0c2d3e;
+    padding: 20px;
+    border-radius: 10px;
+    color: white;
+}
+
+.calendar-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 10px;
+}
+
+.calendar-header h3 {
+    margin: 0;
+    font-size: 20px;
+}
+
+.calendar-header button {
+    background: #3498db;
+    border: none;
+    color: white;
+    padding: 8px 12px;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+#calendar {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    gap: 8px;
+    margin-top: 10px;
+}
+
+.calendar-day {
+    background: #081c30;
+    padding: 15px;
+    border-radius: 8px;
+    text-align: center;
+    font-size: 14px;
+    position: relative;
+    cursor: pointer;
+    transition: background 0.3s;
+}
+
+.calendar-day.event {
+    background: #3498db;
+    color: #fff;
+}
+
+.event-tooltip {
+    display: none;
+    position: absolute;
+    top: 100%;
+    left: 50%;
+    transform: translateX(-50%);
+    background: #1e4559;
+    color: white;
+    padding: 8px 10px;
+    border-radius: 5px;
+    margin-top: 5px;
+    white-space: nowrap;
+    font-size: 12px;
+    z-index: 5;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.4);
+}
+
+.calendar-day.event:hover .event-tooltip {
+    display: block;
+}
+/* Forum Container */
+.forum-container {
+    background: #0c2d3e;
+    border: 1px solid #1e4559;
+    padding: 15px;
+    border-radius: 10px;
+    margin-top: 30px;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+}
+
+/* Daftar pesan */
+#mapalaForumMessages {
+    height: 250px;
+    overflow-y: auto;
+    padding: 10px;
+    background: #081c30;
+    border-radius: 8px;
+    border: 1px solid #1e4559;
+    margin-bottom: 15px;
+    display: flex;
+    flex-direction: column;
+}
+
+/* Setiap pesan */
+.message-item {
+    background-color: #0f3853;
+    color: white;
+    margin-bottom: 10px;
+    padding: 10px 15px;
+    border-radius: 8px;
+    max-width: 70%;
+    word-break: break-word;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.3);
+}
+
+/* Nama pengirim */
+.sender-name {
+    font-size: 12px;
+    color: #aaa;
+    margin-bottom: 3px;
+}
+
+/* Input container */
+.input-container {
+    display: flex;
+    gap: 10px;
+}
+
+/* Input pesan */
+#mapalaForumInput {
+    flex: 1;
+    padding: 12px;
+    border-radius: 8px;
+    background: #081c30;
+    border: 1px solid #1e4559;
+    color: white;
+    font-size: 14px;
+    outline: none;
+}
+
+/* Placeholder */
+#mapalaForumInput::placeholder {
+    color: #888;
+}
+
+/* Tombol Kirim */
+#mapalaSendMessage {
+    padding: 12px 20px;
+    background: #3498db;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 16px;
+    transition: background 0.3s;
+}
+
+#mapalaSendMessage:hover {
+    background: #2980b9;
+}
+/* Style untuk Main Content */
+.content {
+    padding: 30px;
+    background: linear-gradient(to bottom right, #0c2d3e, #081c30);
+    min-height: 100vh;
+    color: white;
+}
+
+/* Card-style untuk setiap section */
+.content section {
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid #1e4559;
+    border-radius: 10px;
+    padding: 20px;
+    margin-bottom: 30px;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+    transition: transform 0.3s, box-shadow 0.3s;
+}
+
+.content section:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 20px rgba(0,0,0,0.4);
+}
+
+/* Breadcrumb */
+.breadcrumb {
+    font-size: 14px;
+    margin-bottom: 20px;
+    color: #bbb;
+}
+
+.breadcrumb a {
+    color: #bbb;
+    text-decoration: none;
+}
+
+.breadcrumb a:hover {
+    text-decoration: underline;
+}
+
+/* Title */
+.content h1 {
+    font-size: 32px;
+    margin-bottom: 20px;
+    color: #ffffff;
+}
+
+/* SubTitle (Deskripsi) */
+.content h2 {
+    font-size: 20px;
+    font-weight: normal;
+    margin-bottom: 20px;
+    color: #cccccc;
+}
+
+/* Gambar organisasi */
+.content img {
+    width: 100%;
+    max-width: 700px;
+    border-radius: 10px;
+    margin-bottom: 30px;
+}
+
+/* Tombol di kalender */
+.calendar-header button {
+    transition: background-color 0.3s, transform 0.2s;
+}
+
+.calendar-header button:hover {
+    background-color: #2980b9;
+    transform: scale(1.05);
+}
+
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Sidebar -->
+        <aside class="sidebar">
+            <h2>Kehidupan di Kampus</h2>
+            <input type="text" id="searchInput" placeholder="Type to search...">
+            <button class="btn" id="allActivitiesBtn"><i class="fas fa-layer-group"></i> Semua Kegiatan Mahasiswa</button>
+
+            <h3>Organisasi</h3>
+            <button class="btn" data-unit="ukm"><i class="fas fa-users"></i> UKM</button>
+            <button class="btn" data-unit="ulm"><i class="fas fa-university"></i> ULM</button>
+            <button class="btn" data-unit="ok"><i class="fas fa-hands-helping"></i> OK</button>
+
+            <h3>Forum Chat</h3>
+            <div class="forum-container">
+                <div id="forumMessages"></div>
+                <div class="input-container">
+                    <input type="text" id="forumInput" placeholder="Type a message..." />
+                    <button id="sendMessage">Send</button>
+                </div>
+                <div id="forumStatus"></div>
+            </div>
+        </aside>
+
+        <!-- Main Content -->
+        <main class="content">
+            <!-- Navigasi Path -->
+            <nav class="breadcrumb"></nav>
+            <h1></h1>
+            <img src="" alt="" style="width:100%; max-width:700px; border-radius:8px; margin:20px 0;">
+            <h2>Komunitas pecinta alam yang aktif dalam kegiatan hiking, susur gua, rock climbing, hingga kampanye pelestarian lingkungan. Mapala membangun kedisiplinan, cinta alam, dan jiwa petualang melalui pelatihan dan ekspedisi rutin.
+            </h2>
+            <section class="calendar-section">
+                <h2>Kalender Kegiatan</h2>
+                <div class="calendar-header">
+                    <button id="prevMonth">&lt;</button>
+                    <h3 id="currentMonth"></h3>
+                    <button id="nextMonth">&gt;</button>
+                </div>
+                <div id="calendar"></div>
+            </section>
+            <section id="mapalaForumSection" class="forum-container">
+                <h2>Forum mapala</h2>
+                <div id="mapalaForumMessages"></div>
+                <div class="input-container">
+                    <input type="text" id="mapalaForumInput" placeholder="Ketik pesan untuk mapala..." />
+                    <button id="mapalaSendMessage">Kirim</button>
+                </div>
+                <div id="mapalaForumStatus"></div>
+            </section>
+            
+        </main>
+        
+        <div id="userProfile" class="user-profile">
+            <div class="profile-picture">
+                <img id="userPhoto" src="https://cdn-icons-png.flaticon.com/512/149/149071.png" alt="User Photo">
+            </div>
+            <div class="user-info-box">
+                <span id="userEmail">Loading...</span>
+            </div>
+        
+            <div id="profileDropdown" class="profile-dropdown hidden">
+                <button id="helpButton">Help / Bantuan</button>
+                <button id="logoutButton">Logout</button>
+            </div>
+        </div>    
+    </div>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <p>&copy; 2025 Kehidupan di Kampus - Universitas Pelita Harapan. All rights reserved.</p>
+    </footer>
+
+    <!-- Firebase scripts -->
+    <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-firestore-compat.js"></script>
+    <script>
+        const firebaseConfig = {
+            apiKey: "AIzaSyAidBvV5RYwCK7Gho4EWXcv82XFE3Kydes",
+            authDomain: "website-student-activity.firebaseapp.com",
+            projectId: "website-student-activity",
+            storageBucket: "website-student-activity.firebasestorage.app",
+            messagingSenderId: "496395451220",
+            appId: "1:496395451220:web:700551aa1d8e9ede1726c1"
+        };
+
+        const updateStatus = (message, isError = false) => {
+            const statusEl = document.getElementById('forumStatus');
+            if (statusEl) {
+                statusEl.textContent = message;
+                statusEl.style.color = isError ? '#e74c3c' : '#f39c12';
+                if (!isError) {
+                    setTimeout(() => statusEl.textContent = '', 3000);
+                }
+            }
+        };
+
+        try {
+            if (!firebase.apps || !firebase.apps.length) {
+                firebase.initializeApp(firebaseConfig);
+                updateStatus("Firebase connected");
+            }
+
+            const db = firebase.firestore();
+            const forumCollection = db.collection("forummapalamessages");
+
+            document.addEventListener("DOMContentLoaded", () => {
+                const forumInput = document.getElementById("forumInput");
+                const sendMessageBtn = document.getElementById("sendMessage");
+                const forumMessages = document.getElementById("forumMessages");
+
+                if (!forumInput || !sendMessageBtn || !forumMessages) {
+                    updateStatus("Forum elements missing", true);
+                    return;
+                }
+
+                forumMessages.innerHTML = '<div class="message-item">Menghubungkan ke forum chat...</div>';
+
+                forumInput.addEventListener("keypress", (e) => {
+                    if (e.key === "Enter") sendMessage();
+                });
+                sendMessageBtn.addEventListener("click", sendMessage);
+
+                function sendMessage() {
+                    const message = forumInput.value.trim();
+                    if (message === "") return;
+                    updateStatus("Mengirim pesan...");
+
+                    const tempId = 'temp-' + Date.now();
+                    const tempElement = document.createElement("div");
+                    tempElement.textContent = message + " (sending...)";
+                    tempElement.classList.add("message-item");
+                    tempElement.id = tempId;
+                    forumMessages.appendChild(tempElement);
+                    forumMessages.scrollTop = forumMessages.scrollHeight;
+
+                    forumCollection.add({
+                        text: message,
+                        timestamp: firebase.firestore.FieldValue.serverTimestamp(),
+                        created: new Date().getTime()
+                    })
+                    .then(docRef => {
+                        forumInput.value = "";
+                        updateStatus("Pesan terkirim!");
+                        const tempMsg = document.getElementById(tempId);
+                        if (tempMsg) tempMsg.remove();
+                    })
+                    .catch(error => {
+                        updateStatus("Error: " + error.message, true);
+                        const tempMsg = document.getElementById(tempId);
+                        if (tempMsg) {
+                            tempMsg.textContent = message + " (gagal terkirim)";
+                            tempMsg.style.borderLeft = "3px solid #e74c3c";
+                        }
+                    });
+                }
+
+                function renderMessages(messages) {
+                    forumMessages.innerHTML = "";
+                    if (messages.length === 0) {
+                        const emptyElement = document.createElement("div");
+                        emptyElement.textContent = "Belum ada pesan. Jadilah yang pertama mengirim!";
+                        emptyElement.classList.add("message-item");
+                        emptyElement.style.fontStyle = "italic";
+                        forumMessages.appendChild(emptyElement);
+                        return;
+                    }
+
+                    messages.forEach(msg => {
+                        const messageElement = document.createElement("div");
+                        messageElement.textContent = msg.text || "[Pesan kosong]";
+                        messageElement.classList.add("message-item");
+                        forumMessages.appendChild(messageElement);
+                    });
+
+                    forumMessages.scrollTop = forumMessages.scrollHeight;
+                }
+
+                function setupRealtimeListener() {
+                    forumCollection.orderBy("timestamp", "asc").onSnapshot(snapshot => {
+                        const messages = [];
+                        snapshot.forEach(doc => {
+                            const data = doc.data();
+                            messages.push({
+                                id: doc.id,
+                                text: data.text,
+                                timestamp: data.timestamp
+                            });
+                        });
+                        renderMessages(messages);
+                    }, error => {
+                        updateStatus("Error: " + error.message, true);
+                    });
+                }
+
+                forumCollection.orderBy("timestamp", "asc").get()
+                    .then(snapshot => {
+                        const messages = [];
+                        snapshot.forEach(doc => {
+                            const data = doc.data();
+                            messages.push({
+                                id: doc.id,
+                                text: data.text,
+                                timestamp: data.timestamp
+                            });
+                        });
+                        renderMessages(messages);
+                        updateStatus(messages.length > 0 ? `Memuat ${messages.length} pesan` : "Tidak ada pesan");
+                        setupRealtimeListener();
+                    })
+                    .catch(error => {
+                        updateStatus("Error: " + error.message, true);
+                        setupRealtimeListener();
+                    });
+            });
+        } catch (error) {
+            updateStatus("Firebase error: " + error.message, true);
+        }
+    </script>
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            const allActivitiesBtn = document.getElementById("allActivitiesBtn");
+            const unitButtons = document.querySelectorAll(".sidebar .btn[data-unit]");
+    
+            if (allActivitiesBtn) {
+                allActivitiesBtn.addEventListener("click", function () {
+                    window.location.href = "semua-kegiatan.html";
+                });
+            }
+    
+            unitButtons.forEach(button => {
+                button.addEventListener("click", function () {
+                    const unitName = button.dataset.unit;
+                    window.location.href = `${unitName}.html`;
+                });
+            });
+        });
+    </script>    
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            const orgData = [
+                { name: "Badan Eksekutif Mahasiswa (mapala)", Image: "Image/mapala.jpg", description: "mapala adalah organisasi mahasiswa yang berperan dalam advokasi dan kegiatan kampus. Sebagai perwakilan eksekutif mahasiswa, mapala bertugas menjembatani komunikasi antara mahasiswa dan pihak kampus, menyelenggarakan program kerja yang bermanfaat, serta memperjuangkan aspirasi dan kepentingan mahasiswa.." },
+                { name: "Majelis Perwakilan Mahasiswa (MPM)", Image: "Image/mpm.png", description: "MPM bertugas sebagai perwakilan mahasiswa dalam kebijakan kampus." },
+                // ... Data lainnya jika perlu
+            ];
+    
+            const orgName = "Badan Eksekutif Mahasiswa (mapala)";
+            const org = orgData.find(item => item.name === orgName);
+    
+            if (org) {
+                document.querySelector("main h1").textContent = org.name;
+                document.querySelector("main img").src = org.Image;
+                document.querySelector("main img").alt = org.name;
+    
+                const descP = document.querySelector("main p");
+                if (descP) {
+                    descP.textContent = org.description;
+                }
+    
+                const breadcrumb = document.querySelector(".breadcrumb");
+                if (breadcrumb) {
+                    breadcrumb.innerHTML = `<a href="semua-kegiatan.html">Semua Kegiatan Mahasiswa</a> → ${org.name}`;
+                }
+            }
+        });
+    </script>   
+        <script>
+            document.addEventListener("DOMContentLoaded", function () {
+                const searchInput = document.getElementById("searchInput");
+                const grid = document.querySelector(".grid");
+            
+                // Search function
+                searchInput?.addEventListener("keydown", function (event) {
+                    if (event.key === "Enter") {
+                        const keyword = this.value.toLowerCase();
+                        const cards = document.querySelectorAll(".card");
+                        cards.forEach(card => {
+                            const title = card.textContent.toLowerCase();
+                            card.style.display = title.includes(keyword) ? "block" : "none";
+                        });
+                    }
+                });
+            
+                // Delegasi event: klik card di dalam grid
+                grid.addEventListener("click", function (event) {
+                    const card = event.target.closest(".card");
+                    if (card) {
+                        const orgName = card.textContent.trim();
+                        const orgUrlName = orgName.toLowerCase().replace(/\s+/g, "-");
+                        window.location.href = `${orgUrlName}.html`;
+                    }
+                });
+            });
+            </script>
+            <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-auth-compat.js"></script>
+            <script>
+                document.addEventListener("DOMContentLoaded", function () {
+                    firebase.auth().onAuthStateChanged(function(user) {
+                        const userPhoto = document.getElementById("userPhoto");
+                        const userEmail = document.getElementById("userEmail");
+            
+                        if (user) {
+                            userPhoto.src = user.photoURL || "default-profile.png"; // fallback ke default
+                            userEmail.textContent = user.email;
+                        } else {
+                            userProfile.style.display = "none"; // kalau belum login, sembunyikan
+                        }
+                    });
+                });
+            </script>
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            const userProfile = document.getElementById("userProfile");
+            const profileDropdown = document.getElementById("profileDropdown");
+            const logoutButton = document.getElementById("logoutButton");
+            const helpButton = document.getElementById("helpButton");
+        
+            userProfile.addEventListener("click", function (e) {
+                e.stopPropagation();
+                profileDropdown.classList.toggle("hidden");
+            });
+        
+            document.addEventListener("click", function () {
+                profileDropdown.classList.add("hidden");
+            });
+        
+            helpButton.addEventListener("click", function () {
+                window.location.href = "help.html";
+            });
+        
+            logoutButton.addEventListener("click", function () {
+    firebase.auth().signOut().then(() => {
+        // Jangan hapus localStorage secara keseluruhan.
+        // Hanya pindahkan ke halaman login.
+        alert("Logout berhasil. Silakan login kembali.");
+        window.location.href = "login.html"; 
+    }).catch((error) => {
+        console.error("Logout error:", error);
+        alert("Gagal logout. Coba lagi.");
+    });
+});
+        });
+        </script> 
+        <script>
+document.addEventListener("DOMContentLoaded", function () {
+    const calendarEl = document.getElementById('calendar');
+
+    const events = {
+        17: "KKR 11.00",
+        18: "Surprise Abang 11.00",
+        22: "Monthly Event 11.00"
+    };
+
+    const daysInMonth = 30; // April
+    const startDay = 1; // Misal 1 = Senin
+
+    for (let i = 1; i <= daysInMonth; i++) {
+        const dayElement = document.createElement('div');
+        dayElement.className = "calendar-day";
+
+        if (events[i]) {
+            dayElement.classList.add("event");
+            dayElement.innerHTML = `
+                <div>${i}</div>
+                <div class="event-tooltip">${events[i]}</div>
+            `;
+        } else {
+            dayElement.innerHTML = `<div>${i}</div>`;
+        }
+
+        calendarEl.appendChild(dayElement);
+    }
+});
+            </script>
+            <script>
+                document.addEventListener("DOMContentLoaded", function () {
+                    const calendarEl = document.getElementById('calendar');
+                    const currentMonthEl = document.getElementById('currentMonth');
+                    const prevMonthBtn = document.getElementById('prevMonth');
+                    const nextMonthBtn = document.getElementById('nextMonth');
+                
+                    let currentDate = new Date();
+                
+                    // Contoh daftar events
+                    const events = {
+                        '2025-05-24': "Touwanua MALAKAT",
+                        '2025-04-18': "Surprise Abang 11.00",
+                        '2025-04-22': "Monthly Event 11.00",
+                        '2025-05-10': "Workshop Nasional 09.00",
+                        '2025-05-21': "Pentas Seni"
+                    };
+                
+                    function renderCalendar(date) {
+                        calendarEl.innerHTML = '';
+                
+                        const year = date.getFullYear();
+                        const month = date.getMonth(); // 0 = Januari
+                        const firstDay = new Date(year, month, 1).getDay(); // 0 = Minggu
+                        const daysInMonth = new Date(year, month + 1, 0).getDate();
+                
+                        const monthNames = [
+                            "Januari", "Februari", "Maret", "April", "Mei", "Juni",
+                            "Juli", "Agustus", "September", "Oktober", "November", "Desember"
+                        ];
+                
+                        currentMonthEl.textContent = `${monthNames[month]} ${year}`;
+                
+                        // Buat kosong di awal kalau perlu
+                        for (let i = 0; i < (firstDay === 0 ? 6 : firstDay - 1); i++) {
+                            const emptyCell = document.createElement('div');
+                            calendarEl.appendChild(emptyCell);
+                        }
+                
+                        // Generate hari-hari
+                        for (let day = 1; day <= daysInMonth; day++) {
+                            const dayElement = document.createElement('div');
+                            dayElement.className = "calendar-day";
+                
+                            const dateKey = `${year}-${String(month + 1).padStart(2, '0')}-${String(day).padStart(2, '0')}`;
+                
+                            if (events[dateKey]) {
+                                dayElement.classList.add("event");
+                                dayElement.innerHTML = `
+                                    <div>${day}</div>
+                                    <div class="event-tooltip">${events[dateKey]}</div>
+                                `;
+                            } else {
+                                dayElement.innerHTML = `<div>${day}</div>`;
+                            }
+                
+                            calendarEl.appendChild(dayElement);
+                        }
+                    }
+                
+                    prevMonthBtn.addEventListener('click', () => {
+                        currentDate.setMonth(currentDate.getMonth() - 1);
+                        renderCalendar(currentDate);
+                    });
+                
+                    nextMonthBtn.addEventListener('click', () => {
+                        currentDate.setMonth(currentDate.getMonth() + 1);
+                        renderCalendar(currentDate);
+                    });
+                
+                    renderCalendar(currentDate);
+                });
+                </script>
+                <script>
+                    document.addEventListener("DOMContentLoaded", function () {
+                        const db = firebase.firestore();
+                        const mapalaForumCollection = db.collection("forummapalaMessages");
+                    
+                        const mapalaForumInput = document.getElementById("mapalaForumInput");
+                        const mapalaSendMessage = document.getElementById("mapalaSendMessage");
+                        const mapalaForumMessages = document.getElementById("mapalaForumMessages");
+                        const mapalaForumStatus = document.getElementById("mapalaForumStatus");
+                    
+                        function updatemapalaStatus(message, isError = false) {
+                            if (mapalaForumStatus) {
+                                mapalaForumStatus.textContent = message;
+                                mapalaForumStatus.style.color = isError ? '#e74c3c' : '#f39c12';
+                                if (!isError) {
+                                    setTimeout(() => mapalaForumStatus.textContent = '', 3000);
+                                }
+                            }
+                        }
+                    
+                        firebase.auth().onAuthStateChanged(function(user) {
+                            if (!user) {
+                                updatemapalaStatus("Silakan login untuk mengirim pesan.", true);
+                                mapalaSendMessage.disabled = true;
+                                mapalaForumInput.disabled = true;
+                                return;
+                            }
+                    
+                            mapalaSendMessage.addEventListener("click", sendmapalaMessage);
+                            mapalaForumInput.addEventListener("keypress", function(e) {
+                                if (e.key === "Enter") sendmapalaMessage();
+                            });
+                    
+                            function sendmapalaMessage() {
+                                const message = mapalaForumInput.value.trim();
+                                if (message === "") return;
+                    
+                                updatemapalaStatus("Mengirim pesan...");
+                    
+                                mapalaForumCollection.add({
+                                    text: message,
+                                    sender: user.displayName || user.email || "Anonim",
+                                    timestamp: firebase.firestore.FieldValue.serverTimestamp()
+                                })
+                                .then(() => {
+                                    mapalaForumInput.value = "";
+                                    updatemapalaStatus("Pesan terkirim!");
+                                })
+                                .catch(error => {
+                                    console.error("Error sending mapala message:", error);
+                                    updatemapalaStatus("Gagal mengirim: " + error.message, true);
+                                });
+                            }
+                    
+                            function rendermapalaMessages(messages) {
+                                mapalaForumMessages.innerHTML = "";
+                                if (messages.length === 0) {
+                                    const emptyElement = document.createElement("div");
+                                    emptyElement.textContent = "Belum ada pesan di forum mapala.";
+                                    emptyElement.classList.add("message-item");
+                                    emptyElement.style.fontStyle = "italic";
+                                    mapalaForumMessages.appendChild(emptyElement);
+                                    return;
+                                }
+                    
+                                messages.forEach(msg => {
+    const messageElement = document.createElement("div");
+    messageElement.classList.add("message-item");
+
+    const senderElement = document.createElement("div");
+    senderElement.classList.add("sender-name");
+    senderElement.textContent = msg.sender || "Anonim";
+
+    const textElement = document.createElement("div");
+    textElement.textContent = msg.text || "[Pesan kosong]";
+
+    messageElement.appendChild(senderElement);
+    messageElement.appendChild(textElement);
+
+    mapalaForumMessages.appendChild(messageElement);
+});
+
+                    
+                                mapalaForumMessages.scrollTop = mapalaForumMessages.scrollHeight;
+                            }
+                    
+                            function setupmapalaRealtimeListener() {
+                                mapalaForumCollection.orderBy("timestamp", "asc").onSnapshot(snapshot => {
+                                    const messages = [];
+                                    snapshot.forEach(doc => {
+                                        const data = doc.data();
+                                        messages.push({
+                                            id: doc.id,
+                                            text: data.text,
+                                            sender: data.sender || "Anonim",
+                                            timestamp: data.timestamp
+                                        });
+                                    });
+                                    rendermapalaMessages(messages);
+                                }, error => {
+                                    console.error("mapala forum listener error:", error);
+                                    updatemapalaStatus("Gagal memuat pesan: " + error.message, true);
+                                });
+                            }
+                    
+                            // Load pesan pertama kali
+                            setupmapalaRealtimeListener();
+                        });
+                    });
+                    </script>
+                               
+</body>
+</html>
